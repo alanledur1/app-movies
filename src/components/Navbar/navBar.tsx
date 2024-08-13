@@ -30,11 +30,11 @@ function DrawerMenu({ isOpen, onClose }: DrawerProps) {
         >
             <div role="presentation" className='drawer-header'>
                 <ul className='drawer-itens' >
-                    <li onClick={onClose}>Home</li>
-                    <li onClick={onClose}>Filmes</li>
-                    <li onClick={onClose}>Séries</li>
-                    <li onClick={onClose}>Sobre</li>
-                    <li onClick={onClose}>Contato</li>
+                    <li onClick={onClose}> <a href="/hpme">Home</a></li>
+                    <li onClick={onClose}> <a href="/filmes">Filmes</a></li>
+                    <li onClick={onClose}> <a href="/series">Séries</a></li>
+                    <li onClick={onClose}> <a href="/sobre">Sobre</a></li>
+                    <li onClick={onClose}> <a href="/contato">Contato</a></li>
                 </ul>
             </div>
         </Drawer>
