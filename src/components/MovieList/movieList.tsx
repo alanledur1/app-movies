@@ -1,34 +1,12 @@
 'use client';
 
-import { useEffect,useState } from 'react';
 import './movieList.scss';
-import axios from 'axios';
 import MovieCard from '../MovieCard/movieCard';
-import { Movie } from '@/types/movie';
 import ReactLoading from 'react-loading';
+import useMovies from '@/hooks/useMovies';
 
 export default function MovieList() {
-    const [movies, setMovies] = useState <Movie[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        getMovies();
-    }, []);
-
-    const getMovies = async () => {
-        await axios({
-            method: 'GET',
-            url: 'https://api.themoviedb.org/3/discover/movie',
-            params:{
-                api_key: 'sua api_key vai aqui',
-                language: 'pt-BR'
-            }
-        }).then(response =>{
-            setMovies(response.data.results);
-        });
-
-        setIsLoading(false);
-    }
+    const  { movies, isLoading} = useMovies();
 
     if (isLoading) {
         return (
