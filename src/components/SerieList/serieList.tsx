@@ -9,7 +9,7 @@ import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 
 export default function SerieList() {
     const { series, isLoading } = useSerie();
-    const  [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const totalPages = Math.ceil(series.length / 40);
 
@@ -57,8 +57,8 @@ export default function SerieList() {
                                 type="radio"
                                 checked={currentPage === index + 1}
                                 onChange={() => setCurrentPage(index + 1)}
-                                />
-                                <span>{index + 1}</span>
+                            />
+                            <span>{index + 1}</span>
                         </label>
                     ))}
                     <label>
