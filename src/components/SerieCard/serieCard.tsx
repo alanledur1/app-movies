@@ -1,14 +1,16 @@
 import { Serie } from "@/types/serie";
+import StartRating from "../StarRating/starRating";
 import './serieCard.scss';
 
-export interface Props{
+export interface SerieCardProps {
     serie: Serie;
+    className?: string; // Adicione a propriedade className
 }
 
-export default function SerieCard(props: Props) {
-    const serie = props.serie;
+export default function SerieCard({serie, className }: SerieCardProps) {
+
     return (
-        <li className="serie-card">
+        <li className={`serie-card ${className}`}>
             <div className="serie-poster">
                 <img 
                     src={`https://image.tmdb.org/t/p/original${serie.poster_path}`} 
@@ -18,6 +20,12 @@ export default function SerieCard(props: Props) {
                 <h2 className="serie-title">
                     {serie.title}
                 </h2>
+
+                {serie.vote_average > 0 &&
+                    <StartRating 
+                        rating={serie.vote_average}
+                    />
+                }
 
                 <div className="hidden-content">
                     {serie.overview && 

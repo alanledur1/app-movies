@@ -21,7 +21,7 @@ export default function useSerie() {
                     params: {
                         api_key: process.env.NEXT_PUBLIC_API_KEY,
                         language: 'pt-BR',
-                        sort_by: 'popularity.desc',
+                        sort_by: 'popularity',
                         page: page,
                     },
                 });
