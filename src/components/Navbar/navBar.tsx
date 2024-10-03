@@ -34,7 +34,6 @@ function DrawerMenu({ isOpen, onClose }: DrawerProps) {
                     <li onClick={onClose}><a href="/filmes">Filmes</a></li>
                     <li onClick={onClose}><a href="/series">Séries</a></li>
                     <li onClick={onClose}><a href="/sobre">Sobre</a></li>
-                    <li onClick={onClose}><a href="/contato">Contato</a></li>
                 </ul>
             </div>
         </Drawer>

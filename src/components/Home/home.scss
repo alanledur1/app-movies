@@ -1,22 +1,45 @@
+// ----------------------------------------------------------------
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 72px);
+}
+
+
 .home-page {
     padding: 20px;
     background-color: #121212;
     color: #fff;
+    width: 100%;
 
-    .home-lan {
+    // Estilos para a seção de lançamentos
+    .movies-lan {
+        display: flex;
+        flex-direction: column;
+        align-items: center; // Centraliza o conteúdo horizontalmente
+        width: 100%;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); // Ajuste do box-shadow para um efeito real de sombra
+
         h1 {
-            text-align: center;
+            margin-top: 20px;
             margin-bottom: 20px;
+            text-align: center;
+            font-size: 2rem; // Tamanho da fonte ajustado
+            position: relative;
         }
     }
 
-    .movies {
+    // Estilos para a seção de filmes/séries populares
+    .movies-pop, .series {
+        margin-top: 60px;
+
         h2 {
             margin-bottom: 20px;
+            position: relative;
+            text-align: center; // Substituímos o 'left: 100px' por um alinhamento central
+            padding: 0 20px; // Adiciona espaçamento nas laterais, útil para telas menores
+            font-size: 1.5rem; // Tamanho da fonte ajustado para ser mais adaptável
         }
-    }
-
-    .series {
-        // Estilos para a seção de séries populares
     }
 }

@@ -1,16 +1,20 @@
-'use client';
-
-import Link from 'next/link'; // Importe o Link do Next.js
-import { Movie } from '@/types/movie';
-import StartRating from '../StarRating/starRating';
+import { useRouter } from 'next/navigation'; // Importação correta
+import { Movie } from "@/types/movie";
+import StartRating from "../StarRating/starRating";
 import './movieCard.scss';
 
-export interface Props {
+export interface MovieCardProps {
     movie: Movie;
+    variant?: "popular" | "new";
 }
 
-export default function MovieCard(props: Props) {
-    const { movie } = props;
+export default function MovieCard({ movie, variant }: MovieCardProps) {
+    const router = useRouter();
+
+    const handleDetails = () => {
+        // Use o ID do filme para criar a rota correta
+        router.push(`/movieDetails/${movie.id}`); // Ajuste conforme a estrutura de rotas do seu projeto
+    };
 
     return (
         <li className='movie-card'>
@@ -37,11 +41,9 @@ export default function MovieCard(props: Props) {
                                 : movie.overview}
                         </p>
                     }
-                    <Link href={`/movieDetails/${movie.id}`} passHref>
-                        <button className="btn-default">
-                                Ver mais
-                        </button>
-                    </Link>
+                    <button className="btn-default" onClick={handleDetails}>
+                        Ver mais
+                    </button>
                 </div>
             </div>
         </li>

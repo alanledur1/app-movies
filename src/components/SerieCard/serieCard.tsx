@@ -1,24 +1,30 @@
 import { Serie } from "@/types/serie";
 import StartRating from "../StarRating/starRating";
 import './serieCard.scss';
+import { useRouter } from 'next/navigation'; // Importação correta
 
 export interface SerieCardProps {
     serie: Serie;
-    className?: string; // Adicione a propriedade className
+    className?: string; // Propriedade para adicionar classes extras, se necessário
 }
 
-export default function SerieCard({serie, className }: SerieCardProps) {
+export default function SerieCard({ serie, className }: SerieCardProps) {
+    const router = useRouter();
 
+    const handleDetails = () => {
+        router.push(`/serieDetails/${serie.id}`)
+    }
     return (
         <li className={`serie-card ${className}`}>
             <div className="serie-poster">
                 <img 
                     src={`https://image.tmdb.org/t/p/original${serie.poster_path}`} 
-                    alt={serie.title} />
+                    alt={serie.title} // Ajustado para "name"
+                />
             </div>
             <div className="serie-infos">
                 <h2 className="serie-title">
-                    {serie.title}
+                    {serie.title} {/* Ajustado para "name" */}
                 </h2>
 
                 {serie.vote_average > 0 &&
@@ -36,11 +42,11 @@ export default function SerieCard({serie, className }: SerieCardProps) {
                         </p>
                     }
 
-                    <button className="btn-default">
+                    <button className="btn-default" onClick={handleDetails}>
                         Ver mais
                     </button>
                 </div>
             </div>
         </li>
-    )
+    );
 }

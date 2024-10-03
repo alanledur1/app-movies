@@ -1,31 +1,49 @@
 'use client';
 
-import useMovies from "@/hooks/useMovies";
-import MovieCarousel from "../CarouselsHome/MovieCarousel/movieCarousel";
 import './home.scss';
+import MovieCarousel from "../CarouselsHome/CarouselMoviesL/movieCarousel";
+import MoviesPopular from "../CarouselsHome/CarouselMoviesP/movieCarouselP";
 import CarouselSeries from "../CarouselsHome/CarouselSeries/carouselSeries";
-import usePopularSeries from "@/hooks/usePolularSeries";
+import useMedia from '@/hooks/useMedia';
+import useSerie from '@/hooks/useSeries';
+import Loading from '../Loading/loading';
 
-export default function Home() {
-    const { series } = usePopularSeries(20);  
-    const { movies, isLoading, error } = useMovies(true);
+export default function Home(): JSX.Element {
+    // Chamando filmes populares
+    const { movies: popularMovies, isLoading: isLoadingMovies, error: errorMovies } = useMedia({ category: "popular" });
+    
+    // Chamando lançamentos recentes
+    const { movies: newMovies, isLoading: isLoadingNewMovies, error: errorNewMovies } = useMedia({ category: "new" });
 
-    if (isLoading) return <div>Carregando conteúdo...</div>; // Melhor mensagem de carregamento
-    if (error) return <div>Erro ao carregar conteúdo: {error.message}</div>; // Exibição de erro
+    // Chamando séries populares
+    const { series: popularSeries, isLoading: isLoadingSeries, error: errorSeries } = useSerie();
+
+
+    // Verificando estados de carregamento e erro
+    if (isLoadingMovies || isLoadingNewMovies || isLoadingSeries) 
+        return <div className='loading-container'> <Loading /> </div>;
+    if (errorMovies) return <div>Erro ao carregar filmes populares: {errorMovies.message}</div>;
+    if (errorNewMovies) return <div>Erro ao carregar lançamentos: {errorNewMovies.message}</div>;
+    if (errorSeries) return <div>Erro ao carregar séries populares: {errorSeries.message}</div>;
 
     return (
         <section className="home-page">
-            <div className="home-lan">
-                <h1>Lançamentos</h1>
-                <MovieCarousel movies={movies} />
+            {/* Seção de lançamentos */}
+            <div className="movies-lan">
+                <h1>Lançamentos Recentes</h1>
+                <MovieCarousel movies={newMovies} />
             </div>
-            <div className="movies">
-                <h2>Outros filmes populares</h2>
 
+            {/* Seção de filmes populares */}
+            <div className="movies-pop">
+                <h2>Filmes Populares</h2>
+                <MoviesPopular movie={popularMovies} />
             </div>
+
+            {/* Seção de séries populares */}
             <div className="series">
                 <h2>Séries Populares</h2>
-                <CarouselSeries serie={series} limit={5}/>
+                <CarouselSeries serie={popularSeries} limit={5}/>
             </div>
         </section>
     );

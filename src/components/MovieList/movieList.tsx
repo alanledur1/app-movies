@@ -1,16 +1,17 @@
 'use client';
 
-import './movieList.scss';
-import useMovies from '@/hooks/useMovies';
-import MovieCard from '../MovieCard/movieCard';
 import { useState } from 'react';
+import MovieCard from '../MovieCard/movieCard';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
 import Loading from '../Loading/loading';
+import useMovies from '@/hooks/useMedia';
+import './movieList.scss';
 
 export default function MovieList() {
-    const  { movies, isLoading} = useMovies();
+    const { movies = [], isLoading } = useMovies({ category: 'popular' }); // Chamando o hook com a categoria popular
     const [currentPage, setCurrentPage] = useState(1);
 
+    // Certificando que 'movies' existe antes de calcular o número de páginas
     const totalPages = Math.ceil(movies.length / 40);
 
     const handleNextChange = () => {
@@ -23,25 +24,25 @@ export default function MovieList() {
 
     const indexOfLastMovie = currentPage * 40;
     const indexOfFirstMovie = indexOfLastMovie - 40;
-    const currenteMovie = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+    const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
 
     if (isLoading) {
         return (
             <div className='loading-container'>
                 <Loading />
             </div>
-        )  // return loading spinner until data is fetched and mapped into cards.  // replace 'spinningBubbles' with desired loading type.  // adjust color and dimensions as needed.  // replace '#123456' with your desired loading spinner color.  // replace '80' with your desired loading spinner height and width.  // replace 'MovieCard' with your actual movie card component.  // replace 'key={movie.id}' with your actual movie id prop.  // replace 'language: 'pt-BR'' with your desired language code.  // replace 'e5edd846266d0cedfd3f5cdfe579da45' with your actual API
+        );
     }
 
     return (
         <div>
             <ul className='movie-list'>
-                {currenteMovie.map(movie =>
+                {currentMovies.map((movie) => (
                     <MovieCard
                         key={movie.id}
                         movie={movie}
                     />
-                )}
+                ))}
             </ul>
             <div className='movie-radio'>
                 <div className='radio-input'>
@@ -66,5 +67,5 @@ export default function MovieList() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

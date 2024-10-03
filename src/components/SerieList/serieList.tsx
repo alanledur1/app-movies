@@ -1,11 +1,11 @@
 'use client';
 
 import useSerie from '@/hooks/useSeries';
-import ReactLoading from 'react-loading';
 import SerieCard from '../SerieCard/serieCard';
-import './serieList.scss';
+import Loading from '../Loading/loading';
 import { useState } from 'react';
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import './serieList.scss';
 
 export default function SerieList() {
     const { series, isLoading } = useSerie();
@@ -28,7 +28,7 @@ export default function SerieList() {
     if (isLoading) {
         return (
             <div className='loading-container'>
-                <ReactLoading type="spin" color="#6046ff" height={'5%'} width={'5%'} />
+                <Loading />
             </div>
         )  // return loading spinner until data is fetched and mapped into cards.  // replace 'spinningBubbles' with desired loading type.  // adjust color and dimensions as needed.  // replace '#123456' with your desired loading spinner color.  // replace '80' with your desired loading spinner height and width.  // replace 'SerieCard' with your actual serie card component.  // replace 'key={serie.id}' with your actual serie id prop.  // replace 'language: 'pt-BR'' with your desired language code.  // replace 'e5edd846266d0cedfd3f5cdfe579da45' with your actual API
     }
