@@ -52,9 +52,8 @@ export default function SerieList() {
                         <label key={index}>
                             <input 
                                 value={`value-${index + 1}`}
-                                name='value-radio'
-                                id={`value-${index + 1}`}
                                 type="radio"
+                                name='page'
                                 checked={currentPage === index + 1}
                                 onChange={() => setCurrentPage(index + 1)}
                             />

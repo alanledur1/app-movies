@@ -1,10 +1,10 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import useMovieDetails from '@/hooks/useMovieDetails';
 import './page.scss';
 import React from 'react';
 import  StartRating  from '../../../components/StarRating/starRating';
+import useMovieDetails from '@/hooks/useMovieDetails';
 
 export default function MovieDetails() {
     const { id } = useParams(); // Use useParams para obter o parâmetro da URL
