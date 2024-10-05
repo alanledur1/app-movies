@@ -1,11 +1,9 @@
-// ----------------------------------------------------------------
 .loading-container {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - 72px);
 }
-
 
 .home-page {
     padding: 20px;
@@ -37,9 +35,48 @@
         h2 {
             margin-bottom: 20px;
             position: relative;
-            text-align: center; // Substituímos o 'left: 100px' por um alinhamento central
-            padding: 0 20px; // Adiciona espaçamento nas laterais, útil para telas menores
-            font-size: 1.5rem; // Tamanho da fonte ajustado para ser mais adaptável
+            text-align: center; // Alinhamento central
+            padding: 0 20px; // Espaçamento lateral para melhor adaptação em telas menores
+            font-size: 1.5rem; // Tamanho da fonte ajustado
+        }
+    }
+
+    // Media queries para responsividade
+    @media (max-width: 1024px) {
+        .movies-lan h1 {
+            font-size: 1.8rem; // Ajusta o tamanho da fonte para telas de até 1024px
+        }
+
+        .movies-pop h2, .series h2 {
+            font-size: 1.4rem; // Ajusta o tamanho da fonte para títulos em telas de até 1024px
+        }
+    }
+
+    @media (max-width: 768px) {
+        .movies-lan h1 {
+            font-size: 1.6rem; // Ajuste adicional para tablets
+        }
+
+        .movies-pop h2, .series h2 {
+            font-size: 1.3rem; // Tamanho da fonte mais ajustado para tablets
+        }
+
+        .movies-lan, .movies-pop, .series {
+            padding: 0 10px; // Reduz o padding para dar mais espaço útil em telas menores
+        }
+    }
+
+    @media (max-width: 480px) {
+        .movies-lan h1 {
+            font-size: 1.4rem; // Tamanho da fonte menor para dispositivos móveis
+        }
+
+        .movies-pop h2, .series h2 {
+            font-size: 1.2rem; // Ajuste do tamanho da fonte para dispositivos móveis
+        }
+
+        .movies-lan, .movies-pop, .series {
+            padding: 0 5px; // Mais espaço em telas muito pequenas
         }
     }
 }

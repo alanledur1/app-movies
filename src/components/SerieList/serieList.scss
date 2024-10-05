@@ -6,83 +6,115 @@
 }
 
 .serie-list {
-  padding: 24px 3%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  list-style: none;
-  width: 100%;
+    padding: 24px 3%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    list-style: none;
+    width: 100%;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); // Ajuste para telas menores
+        gap: 12px;
+    }
+
+    @media (max-width: 480px) {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); // Ajuste para dispositivos móveis
+        gap: 8px;
+    }
 }
 
 .serie-radio {
-  display: flex;
-  justify-content: center;
-  margin: 20px;
+    display: flex;
+    justify-content: center;
+    margin: 20px;
 
-  .radio-input {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-  }
+    .radio-input {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-  button {
-      background-color: #fff;
-      color: #FFC107;
-      border: 2px solid #FFC107;
-      border-radius: 20px;
-      width: 50px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    button {
+        background-color: #fff;
+        color: #FFC107;
+        border: 2px solid #FFC107;
+        border-radius: 20px;
+        width: 50px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
 
-      &:hover {
-          background-color: #FFC107;
-          color: #fff;
-      }
+        &:hover {
+            background-color: #FFC107;
+            color: #fff;
+        }
 
-      &:disabled {
-          background-color: #f0f0f0;
-          color: #b0b0b0;
-          border-color: #d0d0d0;
-          cursor: not-allowed;
-      }
-  }
+        &:disabled {
+            background-color: #f0f0f0;
+            color: #b0b0b0;
+            border-color: #d0d0d0;
+            cursor: not-allowed;
+        }
 
-  input[type="radio"] {
-      display: none;
-  }
+        @media (max-width: 768px) {
+            width: 40px;
+            height: 35px; // Reduzido para telas menores
+        }
 
-  label {
-      position: relative;
-  }
+        @media (max-width: 480px) {
+            width: 35px;
+            height: 30px; // Reduzido ainda mais para dispositivos móveis
+        }
+    }
 
-  span {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-      height: 40px;
-      font-size: 16px;
-      background-color: #fff;
-      border: 2px solid #FFC107;
-      border-radius: 20px;
-      color: #FFC107;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    input[type="radio"] {
+        display: none;
+    }
 
-      &:hover {
-          background-color: #FFC107;
-          color: #fff;
-      }
-  }
+    label {
+        position: relative;
+    }
 
-  input[type="radio"]:checked + span {
-      background-color: #FFC107;
-      color: #fff;
-      transform: scale(1.1);
-  }
+    span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 40px;
+        font-size: 16px;
+        background-color: #fff;
+        border: 2px solid #FFC107;
+        border-radius: 20px;
+        color: #FFC107;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: #FFC107;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            width: 25px;
+            height: 35px; // Ajustado para telas menores
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            width: 20px;
+            height: 30px; // Ajustado para dispositivos móveis
+            font-size: 12px;
+        }
+    }
+
+    input[type="radio"]:checked + span {
+        background-color: #FFC107;
+        color: #fff;
+        transform: scale(1.1);
+    }
 }

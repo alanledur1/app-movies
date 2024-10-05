@@ -70,3 +70,53 @@
         }
     }
 }
+
+/* Estilos para telas menores (tablets e smartphones) */
+@media (max-width: 768px) {
+    .movie-card {
+        height: auto; /* Ajusta altura para caber melhor em telas menores */
+        
+        .movie-infos {
+            height: 150px; /* Reduz o tamanho da informação para telas menores */
+            padding: 8px;
+
+            .movie-title {
+                font-size: 14px; /* Aumenta o tamanho da fonte para melhorar legibilidade */
+                margin-bottom: 0px;
+            }
+
+            .hidden-content {
+                font-size: 11px; /* Fonte um pouco maior para melhor leitura */
+                .btn-default {
+                    padding: 4px 6px; /* Botão menor */
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 460px) {
+    .movie-card {
+        height: auto;
+
+        .movie-poster img {
+            height: 200px; /* Reduz a altura da imagem para caber melhor */
+        }
+
+        .movie-infos {
+            height: 120px; /* Reduz a área das informações */
+            padding: 6px;
+
+            .movie-title {
+                font-size: 12px; /* Ajusta tamanho da fonte para telas bem pequenas */
+            }
+
+            .hidden-content {
+                font-size: 10px; /* Fonte menor para caber nas telas pequenas */
+                .btn-default {
+                    padding: 2px 3px; /* Botão menor */
+                }
+            }
+        }
+    }
+}
