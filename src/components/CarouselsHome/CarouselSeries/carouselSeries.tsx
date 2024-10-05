@@ -2,7 +2,7 @@
 
 import SerieCard from "@/components/SerieCard/serieCard";
 import { Serie } from "@/types/serie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaPlus } from "react-icons/fa";
 import './carouselSeries.scss';
 
@@ -15,9 +15,36 @@ interface SeriesCarouselProps {
 export default function CarouselSeries({ serie, limit = 5, totalLimit = 20 }: SeriesCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [visibleLimit, setVisibleLimit] = useState(limit);
-
-    // Verifica se há mais itens disponíveis e o botão "Ver mais" deve ser exibido
+    const [itemsPerPage, setItemPerPage] = useState(limit);
+    
+    // Checks if there are more items available and if the "Show more" button should be displayed
     const hasMoreItems = serie.length > visibleLimit;
+
+    // Calculates the number of items visible on the screen
+    useEffect(() => {
+        const updateItemsPerPage = () => {
+            if (window.innerWidth <= 480) {
+                setItemPerPage(1); // Shows 1 item at a time on small screens
+            } else if (window.innerWidth <= 768) {
+                setItemPerPage(2); // Shows 2 items at a time on medium screens
+            } else if (window.innerWidth <= 1024) {
+                setItemPerPage(3); // Shows 3 items at a time on tablets
+            } else {
+                setItemPerPage(limit); // Shows the default limit on large screens
+            }
+        }
+
+        // Calls the function when the window is resized
+        window.addEventListener('resize', updateItemsPerPage);
+
+        // Calls the function to set the initial value
+        updateItemsPerPage();
+
+        // Cleans up the listener when the component is unmounted
+        return () => {
+            window.removeEventListener('resize', updateItemsPerPage);
+        }
+    }, [limit]);
 
     const handlePrev = () => {
         setCurrentIndex((prevIndex) => 
@@ -27,19 +54,13 @@ export default function CarouselSeries({ serie, limit = 5, totalLimit = 20 }: Se
 
     const handleNext = () => {
         setCurrentIndex((prevIndex) => 
-            prevIndex + limit >= serie.length ? prevIndex : prevIndex + 1
+            prevIndex + 1 >= serie.length ? prevIndex : prevIndex + 1
         );
     };
 
-    const handleShowMore = () => {
-        setVisibleLimit((prevLimit) => {
-            const newLimit = Math.min(prevLimit + limit, totalLimit);
-            return newLimit;
-        });
-    };
 
-    // Calcula o índice final dos itens visíveis
-    const visibleSeries = serie.slice(currentIndex, currentIndex + limit);
+    // Calculates the final index of the visible items
+    const visibleSeries = serie.slice(currentIndex, currentIndex + itemsPerPage);
 
     return (
         <div className="serie-carousel">
@@ -54,17 +75,19 @@ export default function CarouselSeries({ serie, limit = 5, totalLimit = 20 }: Se
                 {visibleSeries.map((serieItem) => (
                     <SerieCard key={serieItem.id} serie={serieItem} />
                 ))}
-                {visibleLimit >= totalLimit && (
-                    <button className="more-button" onClick={handleShowMore}>
-                        <FaPlus />
-                        Ver mais
+                {hasMoreItems && visibleLimit < totalLimit && (
+                    <button className="more-button">
+                        <a href="/series">
+                            <FaPlus /> 
+                            Ver mais
+                        </a>
                     </button>
                 )}
             </div>
             <button 
                 className="carousel-control right" 
                 onClick={handleNext} 
-                disabled={currentIndex + limit >= serie.length} // Desativa o botão se no final
+                disabled={currentIndex + itemsPerPage >= serie.length} // Desativa o botão se no final
             >
                 <FaArrowRight />
             </button>

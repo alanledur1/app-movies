@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import './movieCarousel.scss';
 import { useRouter } from "next/navigation";
@@ -14,22 +14,48 @@ interface MovieCarouselProps {
 export default function MovieCarousel({ movies = [], limit = 10 }: MovieCarouselProps) { // Inicializando movies como um array vazio
     const [currentIndex, setCurrentIndex] = useState(0);
     const router = useRouter();
+    const [itemsPerPage, setItemPerPage] = useState(limit);
 
-    const handleNext = () => {
-        if (currentIndex < movies.length - limit) {
-            setCurrentIndex(currentIndex + 1);
+    // Calculates the number of items visible on the screen
+    useEffect(() => {
+        const updateItemsPerPage = () => {
+            if (window.innerWidth <= 480) {
+                setItemPerPage(1); // Shows 1 item at a time on small screens
+            } else if (window.innerWidth <= 768) {
+                setItemPerPage(2); // Shows 2 items at a time on medium screens
+            } else if (window.innerWidth <= 1024) {
+                setItemPerPage(3); // Shows 3 items at a time on tablets
+            } else {
+                setItemPerPage(limit); // Shows the default limit on large screens
+            }
         }
-    };
+
+        // Calls the function when the window is resized
+        window.addEventListener('resize', updateItemsPerPage);
+
+        // Calls the function to set the initial value
+        updateItemsPerPage();
+
+        // Cleans up the listener when the component is unmounted
+        return () => {
+            window.removeEventListener('resize', updateItemsPerPage);
+        }
+    }, [limit]);
 
     const handlePrev = () => {
-        if (currentIndex > 0) {
-            setCurrentIndex(currentIndex - 1);
-        }
+        setCurrentIndex((prevIndex) => 
+            prevIndex === 0 ? 0 : prevIndex - 1
+        );
     };
 
-    
-    // Verificando se o movies é um array e tem elementos
-    const visibleMovies = movies.slice(currentIndex, currentIndex + limit);
+    const handleNext = () => {
+        setCurrentIndex((prevIndex) => 
+            prevIndex + 1 >= movies.length ? prevIndex : prevIndex + 1
+        );
+    };
+
+    // Calculates the final index of the visible items
+    const visibleMovies = movies.slice(currentIndex, currentIndex + itemsPerPage);
     
     const handleDetails = (id: number) => {
         // Use o ID do filme para criar a rota correta
