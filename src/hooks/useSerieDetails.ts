@@ -18,7 +18,7 @@ export default function useSerieDetails (serieId: string | string[] | undefined)
     const getMovieDetails = async (id: string | string[]) => {
         if (typeof id === "string") {
             try {
-                const response = await axios.get(`https://api.themoviedb.org/3/movie/${serieId}`, {
+                const response = await axios.get(`https://api.themoviedb.org/3/tv/${serieId}`, {
                     params: {
                         api_key: process.env.NEXT_PUBLIC_API_KEY,
                         language: 'pt-BR'
