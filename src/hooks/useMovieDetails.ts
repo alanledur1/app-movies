@@ -4,13 +4,18 @@ import { Movie } from "@/types/movie";
 
 export default function useMovieDetails (movieId: string | string[] | undefined) {
     const [movie, setMovie] = useState<Movie | null>(null);
+    const [trailer, setTrailer] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
 
 
     useEffect(() => { 
-        if (movieId) {
+        if (typeof movieId === "string") {
             getMovieDetails(movieId);
+            getMovieTrailer(movieId);
+        } else if (movieId) {
+            setError(new Error("Invalid movie Id format"));
+            setLoading(false);
         }
     }, [movieId]);
 
@@ -35,7 +40,29 @@ export default function useMovieDetails (movieId: string | string[] | undefined)
         } else {
             setError(new Error);
         }
-    }
+    };
 
-    return { movie, loading, error };
+    // Função para obter o trailer do filme
+    const getMovieTrailer = async (id: string) => {
+        try{
+            const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}/videos`, {
+                params: {
+                    api_key: process.env.NEXT_PUBLIC_API_KEY,
+                    language: 'pt-BR',
+                },
+            });
+
+            const videos = response.data.results;
+            // Filtra o trailer oficial (geralmente do tipo 'Trailer' e site 'YouTube')
+            const officialTrailer = videos.find(
+                (video: {type: string; site: string }) => video.type === "Trailer" && video.site === "YouTube"
+            );
+
+        } catch (err) {
+            setError(err as Error);
+        }
+    };
+
+
+    return { movie, trailer, loading, error };
 }
