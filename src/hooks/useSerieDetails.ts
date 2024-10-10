@@ -5,6 +5,7 @@ import { Serie } from "@/types/serie";
 
 export default function useSerieDetails (serieId: string | string[] | undefined) {
     const [serie, setSerie] = useState<Serie | null>(null);
+    const [seasons, setSeasons] = useState<Serie | null>(null);
     const [trailer, setTrailer] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
@@ -28,8 +29,10 @@ export default function useSerieDetails (serieId: string | string[] | undefined)
                     language: 'pt-BR'
                 },
             });
-            // Se a requisição for bem-sucedida, define o estado da serie para os dados da resposta
-            setSerie(response.data);
+            
+            const serieData = response.data;
+            setSerie(serieData);
+            setSeasons(serieData.seasons);
         } catch (err) {
             // Se houver um erro, define o estado de erro para o erro capturado
             setError(err as Error);
@@ -67,5 +70,5 @@ export default function useSerieDetails (serieId: string | string[] | undefined)
         }
     };
 
-    return { serie, trailer, loading, error };
+    return { serie, seasons, trailer, loading, error };
 }
