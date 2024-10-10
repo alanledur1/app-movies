@@ -8,7 +8,7 @@ import useSerieDetails from '@/hooks/useSerieDetails';
 
 export default function SerieDetails() {
     const { id } = useParams(); // Use useParams para obter o parâmetro da URL
-    const { serie, loading, error } = useSerieDetails(id);
+    const { serie, trailer, loading, error } = useSerieDetails(id);
 
     if (loading) return <div>Carregando...</div>;
     if (error) return <div>Erro: {error.message}</div>;
@@ -30,6 +30,18 @@ export default function SerieDetails() {
                         <p><strong>Nota:</strong> {serie.vote_average}</p>
                         <StartRating rating={serie.vote_average} />
                     </div>
+                </div>
+            )}
+            {trailer && (
+                <div className="trailer-container">
+                    <iframe
+                        src={trailer}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className='iframe'
+                    ></iframe>
                 </div>
             )}
         </div>
