@@ -19,12 +19,12 @@ export default function SerieCard({ serie, className }: SerieCardProps) {
             <div className="serie-poster">
                 <img 
                     src={`https://image.tmdb.org/t/p/original${serie.poster_path}`} 
-                    alt={serie.title} // Ajustado para "name"
+                    alt={serie.name} // Ajustado para "name"
                 />
             </div>
             <div className="serie-infos">
                 <h2 className="serie-title">
-                    {serie.title} {/* Ajustado para "name" */}
+                    {serie.name} {/* Ajustado para "name" */}
                 </h2>
 
                 {serie.vote_average > 0 &&
