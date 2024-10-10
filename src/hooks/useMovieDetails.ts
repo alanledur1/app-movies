@@ -44,7 +44,7 @@ export default function useMovieDetails (movieId: string | string[] | undefined)
 
     // Função para obter o trailer do filme
     const getMovieTrailer = async (id: string) => {
-        try{
+        try {
             const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}/videos`, {
                 params: {
                     api_key: process.env.NEXT_PUBLIC_API_KEY,
@@ -55,9 +55,16 @@ export default function useMovieDetails (movieId: string | string[] | undefined)
             const videos = response.data.results;
             // Filtra o trailer oficial (geralmente do tipo 'Trailer' e site 'YouTube')
             const officialTrailer = videos.find(
-                (video: {type: string; site: string }) => video.type === "Trailer" && video.site === "YouTube"
+                (video: { type: string; site: string }) =>
+                    video.type === "Trailer" && video.site === "YouTube"
             );
 
+            if (officialTrailer) {
+                // Construa o URL do embed do YouTube
+                setTrailer(`https://www.youtube.com/embed/${officialTrailer.key}`);
+            } else {
+                setTrailer(null);
+            }
         } catch (err) {
             setError(err as Error);
         }
