@@ -8,7 +8,6 @@ export interface Season {
 };
 
 export interface Serie {
-    length: number;
     id: number;
     name: string; // Corrigido de 'title' para 'name', já que séries usam 'name'
     poster_path: string;
